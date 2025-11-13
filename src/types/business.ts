@@ -16,6 +16,11 @@ export interface Testimonial {
   group?: string;
 }
 
+export interface ExcursionItem {
+  text: string;
+  imageUrl?: string;
+}
+
 export interface Business {
   id: string;
   name: string;
@@ -24,7 +29,7 @@ export interface Business {
   x: number; // Position on map (percentage)
   y: number; // Position on map (percentage)
   description: string;
-  excursions: string[];
+  excursions: (string | ExcursionItem)[];
   professions: string[];
   icon: string;
   color: string;
@@ -32,6 +37,7 @@ export interface Business {
   history?: HistoryItem[];
   testimonials?: Testimonial[];
   imageUrl?: string;
+  excursionYears?: number[]; // Годы проведения экскурсий
 }
 
 export const businessCategories = {

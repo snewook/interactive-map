@@ -14,9 +14,10 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
 
   return (
     <svg
-      viewBox="0 0 100 100"
+      viewBox="0 0 160 100"
       className="w-full h-full"
       style={{ maxHeight: '100vh' }}
+      preserveAspectRatio="xMidYMid meet"
     >
       {/* Background gradient */}
       <defs>
@@ -36,14 +37,14 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       </defs>
 
       {/* Sky background */}
-      <rect width="100" height="100" fill="url(#skyGradient)" />
+      <rect width="160" height="100" fill="url(#skyGradient)" />
 
       {/* Grid pattern */}
-      <rect width="100" height="100" fill="url(#grid)" opacity="0.3" />
+      <rect width="160" height="100" fill="url(#grid)" opacity="0.3" />
 
       {/* River */}
       <motion.path
-        d="M 0 65 Q 25 68, 50 70 T 100 72 L 100 80 Q 75 78, 50 77 T 0 73 Z"
+        d="M 0 65 Q 40 68, 80 70 T 160 72 L 160 80 Q 120 78, 80 77 T 0 73 Z"
         fill="url(#waterGradient)"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -52,7 +53,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
 
       {/* Park areas */}
       <motion.ellipse
-        cx="45"
+        cx="72"
         cy="70"
         rx="8"
         ry="6"
@@ -67,7 +68,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       />
 
       <motion.circle
-        cx="28"
+        cx="45"
         cy="52"
         r="5"
         fill="#86efac"
@@ -82,7 +83,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
 
       {/* Roads */}
       <motion.path
-        d="M 0 30 L 100 30"
+        d="M 0 30 L 160 30"
         stroke="#94a3b8"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -91,7 +92,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
         transition={{ duration: 1.5, delay: 0.5 }}
       />
       <motion.path
-        d="M 0 30 L 100 30"
+        d="M 0 30 L 160 30"
         stroke="#f1f5f9"
         strokeWidth="0.3"
         strokeDasharray="2,2"
@@ -101,7 +102,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       />
 
       <motion.path
-        d="M 50 0 L 50 100"
+        d="M 80 0 L 80 100"
         stroke="#94a3b8"
         strokeWidth="1.2"
         strokeLinecap="round"
@@ -110,7 +111,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
         transition={{ duration: 1.5, delay: 0.7 }}
       />
       <motion.path
-        d="M 50 0 L 50 100"
+        d="M 80 0 L 80 100"
         stroke="#f1f5f9"
         strokeWidth="0.3"
         strokeDasharray="2,2"
@@ -120,7 +121,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       />
 
       <motion.path
-        d="M 0 50 L 100 50"
+        d="M 0 50 L 160 50"
         stroke="#94a3b8"
         strokeWidth="1"
         strokeLinecap="round"
@@ -130,7 +131,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       />
 
       <motion.path
-        d="M 25 0 L 25 100"
+        d="M 40 0 L 40 100"
         stroke="#94a3b8"
         strokeWidth="0.8"
         strokeLinecap="round"
@@ -140,7 +141,7 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
       />
 
       <motion.path
-        d="M 75 0 L 75 100"
+        d="M 120 0 L 120 100"
         stroke="#94a3b8"
         strokeWidth="0.8"
         strokeLinecap="round"
@@ -151,14 +152,14 @@ export function InteractiveMap({ businesses, onBusinessClick, selectedBusinessId
 
       {/* Building blocks */}
       {[
-        { x: 10, y: 15, w: 8, h: 6 },
-        { x: 35, y: 10, w: 6, h: 5 },
-        { x: 65, y: 12, w: 7, h: 7 },
-        { x: 80, y: 18, w: 8, h: 8 },
-        { x: 12, y: 35, w: 6, h: 5 },
-        { x: 78, y: 35, w: 9, h: 6 },
-        { x: 8, y: 55, w: 7, h: 6 },
-        { x: 68, y: 52, w: 5, h: 5 },
+        { x: 16, y: 15, w: 8, h: 6 },
+        { x: 56, y: 10, w: 6, h: 5 },
+        { x: 104, y: 12, w: 7, h: 7 },
+        { x: 128, y: 18, w: 8, h: 8 },
+        { x: 19, y: 35, w: 6, h: 5 },
+        { x: 125, y: 35, w: 9, h: 6 },
+        { x: 13, y: 55, w: 7, h: 6 },
+        { x: 109, y: 52, w: 5, h: 5 },
       ].map((block, i) => (
         <motion.rect
           key={i}

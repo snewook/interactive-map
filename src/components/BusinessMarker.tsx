@@ -84,7 +84,7 @@ export function BusinessMarker({ business, onClick, isActive }: BusinessMarkerPr
         transition={{ duration: 0.2 }}
       />
 
-      {/* Main marker circle */}
+      {/* Main marker circle (круглый) */}
       <motion.circle
         cx={business.x}
         cy={business.y}
@@ -111,37 +111,6 @@ export function BusinessMarker({ business, onClick, isActive }: BusinessMarkerPr
         >
           <div className="flex items-center justify-center w-full h-full">
             <Icon className="w-10 h-10 text-white" strokeWidth={2.5} />
-          </div>
-        </foreignObject>
-      </motion.g>
-
-      {/* Label on hover */}
-      <motion.g
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      >
-        <rect
-          x={business.x - 6}
-          y={business.y + 6}
-          width="12"
-          height="2"
-          rx="0.3"
-          fill="white"
-          stroke={business.color}
-          strokeWidth="0.15"
-        />
-        <foreignObject
-          x={business.x - 6}
-          y={business.y + 6}
-          width="12"
-          height="2"
-          style={{ pointerEvents: 'none' }}
-        >
-          <div className="flex items-center justify-center w-full h-full px-2">
-            <span className="text-sm truncate" style={{ color: business.color }}>
-              {business.name}
-            </span>
           </div>
         </foreignObject>
       </motion.g>
