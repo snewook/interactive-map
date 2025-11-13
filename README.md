@@ -9,3 +9,4 @@
 
   Run `npm run dev` to start the development server.
   
+  [![Netlify Status](https://api.netlify.com/api/v1/badges/c6836c5d-747d-44e2-b12b-04ad0cd9acc9/deploy-status)](https://app.netlify.com/projects/int-map/deploys)

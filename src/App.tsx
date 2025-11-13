@@ -1,14 +1,21 @@
 import { useState } from 'react';
-import { InteractiveMap } from './components/InteractiveMap';
-import { BusinessDetailDialog } from './components/BusinessDetailDialog';
-import { MapLegend } from './components/MapLegend';
-import { businesses } from './data/businesses';
-import { Business } from './types/business';
 import { motion } from 'motion/react';
 import { Map, Sparkles } from 'lucide-react';
+import { InteractiveMap } from './components/InteractiveMap';
+import { BusinessDetailDialog } from './components/BusinessDetailDialog';
+import { businesses } from './data/businesses';
+import { Business } from './types/business';
 
 export default function App() {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
+
+  const handleNextBusiness = () => {
+    if (!selectedBusiness) return;
+    
+    const currentIndex = businesses.findIndex(b => b.id === selectedBusiness.id);
+    const nextIndex = (currentIndex + 1) % businesses.length;
+    setSelectedBusiness(businesses[nextIndex]);
+  };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--background)' }}>
@@ -18,7 +25,7 @@ export default function App() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white border-b-2 border-gray-300 sticky top-0 z-30 shadow-md"
       >
-        <div className="container mx-auto px-6 py-6">
+        <div className="container mx-auto px-6 py-6 max-w-screen-2xl 4k:max-w-none">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
               <div 
@@ -45,94 +52,50 @@ export default function App() {
       </motion.header>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-[1fr,340px] gap-8">
-          {/* Map Container */}
+      <div className="container mx-auto px-6 py-6 max-w-screen-2xl 4k:max-w-none 4k:px-12">
+        {/* Simple Hint Above Map */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center justify-center gap-3 mb-4"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-lg shadow-xl overflow-hidden border-2 border-gray-300"
-            style={{ height: 'calc(100vh - 200px)', minHeight: '600px' }}
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+            className="w-10 h-10 rounded-full flex items-center justify-center"
+            style={{ backgroundColor: 'var(--accent)' }}
           >
-            <div className="w-full h-full p-8">
-              <InteractiveMap
-                businesses={businesses}
-                onBusinessClick={setSelectedBusiness}
-                selectedBusinessId={selectedBusiness?.id}
-              />
-            </div>
+            <Map className="w-5 h-5 text-white" />
           </motion.div>
+          <p className="text-lg" style={{ color: 'var(--foreground)', fontFamily: 'var(--font-body)' }}>
+            Нажмите на маркер предприятия на карте
+          </p>
+        </motion.div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            <MapLegend />
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6 }}
-              className="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-200"
-            >
-              <h3 className="mb-4" style={{ fontFamily: 'var(--font-heading)', color: 'var(--primary)' }}>
-                Как пользоваться картой
-              </h3>
-              <ul className="space-y-4 text-sm leading-relaxed" style={{ color: 'var(--foreground)' }}>
-                <li className="flex gap-3">
-                  <span 
-                    className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"
-                    style={{ backgroundColor: 'var(--accent)' }}
-                  >
-                    1
-                  </span>
-                  <span>Нажмите на маркер предприятия на карте</span>
-                </li>
-                <li className="flex gap-3">
-                  <span 
-                    className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"
-                    style={{ backgroundColor: 'var(--accent)' }}
-                  >
-                    2
-                  </span>
-                  <span>Изучите экскурсии, технологии и историю предприятия</span>
-                </li>
-                <li className="flex gap-3">
-                  <span 
-                    className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs"
-                    style={{ backgroundColor: 'var(--accent)' }}
-                  >
-                    3
-                  </span>
-                  <span>Узнайте, какие профессии можно получить</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.7 }}
-              className="rounded-lg shadow-lg p-6 text-white"
-              style={{ backgroundColor: 'var(--primary)' }}
-            >
-              <div className="flex items-start gap-3 mb-3">
-                <Sparkles className="w-7 h-7 mt-1 flex-shrink-0" />
-                <h3 className="text-white" style={{ fontFamily: 'var(--font-heading)' }}>
-                  О проекте
-                </h3>
-              </div>
-              <p className="text-sm leading-relaxed opacity-90">
-                Познакомьтесь с ведущими предприятиями региона. Каждая экскурсия — это шаг к выбору будущей профессии и успешной карьере.
-              </p>
-            </motion.div>
+        {/* Map Container */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+          className="bg-white rounded-lg shadow-xl overflow-hidden border-2 border-gray-300 2k:w-full 4k:w-full"
+          style={{ height: 'calc(100vh - 220px)', minHeight: '700px' }}
+        >
+          <div className="w-full h-full p-8 4k:p-12">
+            <InteractiveMap
+              businesses={businesses}
+              onBusinessClick={setSelectedBusiness}
+              selectedBusinessId={selectedBusiness?.id}
+            />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Business Detail Dialog */}
       <BusinessDetailDialog
         business={selectedBusiness}
         onClose={() => setSelectedBusiness(null)}
+        onNext={handleNextBusiness}
       />
     </div>
   );
